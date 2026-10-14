@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+
+{% block title %}
+PCA
+{% endblock %}
+
+{% block content %}
+
+<h1>Principal Component Analysis</h1>
+
+<p>
+    PCA is used to reduce the number of numerical features
+    while keeping the important information in the dataset.
+</p>
+
+<hr>
+
+{% if error %}
+
+<p style="color:red;">
+    <b>Error:</b> {{ error }}
+</p>
+
+{% endif %}
+
+{% if results %}
+
+<h2>Dataset</h2>
+
+<p>
+    <b>{{ filename }}</b>
+</p>
+
+<h2>Features Used</h2>
+
+<ul>
+
+{% for feature in results.features %}
+
+<li>{{ feature }}</li>
+
+{% endfor %}
+
+</ul>
+
+<h2>Explained Variance</h2>
+
+<table border="1" cellpadding="10">
+
+    <tr>
+        <th>Component</th>
+        <th>Variance Explained</th>
+    </tr>
+
+    <tr>
+        <td>PC1</td>
+        <td>{{ results.pc1_variance }}%</td>
+    </tr>
+
+    <tr>
+        <td>PC2</td>
+        <td>{{ results.pc2_variance }}%</td>
+    </tr>
+
+    <tr>
+        <th>Total</th>
+        <th>{{ results.total_variance }}%</th>
+    </tr>
+
+</table>
+
+<h2>Reduced Dataset</h2>
+
+{{ results.pca_data.head(10).to_html(
+    classes="data-table",
+    index=False
+)|safe }}
+
+{% endif %}
+
+{% endblock %}

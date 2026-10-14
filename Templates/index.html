@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block title %}
+GlucoTrend
+{% endblock %}
+
+{% block content %}
+
+<h1>GlucoTrend</h1>
+
+<h2>Continuous Glucose Forecasting</h2>
+
+<p>
+    GlucoTrend is a machine learning project that analyzes
+    continuous glucose monitoring data and predicts future
+    glucose levels using lifestyle, physiological and recent
+    glucose information.
+</p>
+
+<hr>
+
+<h2>Machine Learning Pipeline</h2>
+
+<ul>
+
+    <li>Data Upload</li>
+
+    <li>Data Summary</li>
+
+    <li>Exploratory Data Analysis</li>
+
+    <li>Feature Scaling</li>
+
+    <li>Missing Value Handling</li>
+
+    <li>Encoding</li>
+
+    <li>Linear Regression</li>
+
+    <li>Decision Tree Regression</li>
+
+    <li>Random Forest Regression</li>
+
+    <li>Gradient Boosting Regression</li>
+
+    <li>K-Means Clustering</li>
+
+    <li>Logistic Regression</li>
+
+</ul>
+
+<hr>
+
+<h2>Forecasting Target</h2>
+
+<p>
+    The system uses current and recent observations to
+    forecast the glucose value approximately 15 minutes
+    into the future.
+</p>
+
+<a href="{{ url_for('upload') }}">
+    <button>Start Project</button>
+</a>
+
+{% endblock %}

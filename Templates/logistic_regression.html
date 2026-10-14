@@ -1,0 +1,232 @@
+{% extends "base.html" %}
+
+{% block title %}
+Logistic Regression
+{% endblock %}
+
+{% block content %}
+
+<h1>Logistic Regression</h1>
+
+<p>
+    Logistic Regression is used to classify the
+    glucose readings into simple glucose ranges.
+</p>
+
+<p>
+    <b>Classification:</b>
+    Low / Normal / High
+</p>
+
+<p>
+    This module demonstrates the classification technique
+    taught in the classroom ML pipeline.
+</p>
+
+<hr>
+
+<h2>1. Select Required Features</h2>
+
+<p>
+    Select the input features (X):
+</p>
+
+<form method="POST">
+
+    {% for column in columns %}
+
+        {% if column != "glucose"
+              and column != "glucose_category"
+              and column != "timestamp"
+              and column != "user_id" %}
+
+        <label>
+
+            <input
+                type="checkbox"
+                name="features"
+                value="{{ column }}"
+                {% if column in selected_features %}
+                checked
+                {% endif %}
+            >
+
+            {{ column }}
+
+        </label>
+
+        <br>
+
+        {% endif %}
+
+    {% endfor %}
+
+    <br>
+
+    <button type="submit">
+        Train Logistic Regression
+    </button>
+
+</form>
+
+{% if error %}
+
+<hr>
+
+<p style="color:red;">
+
+    <b>Error:</b>
+
+    {{ error }}
+
+</p>
+
+{% endif %}
+
+
+{% if results %}
+
+<hr>
+
+<h2>Logistic Regression Results</h2>
+
+
+<h3>Selected Features</h3>
+
+<ul>
+
+    {% for feature in results.features %}
+
+    <li>
+        {{ feature }}
+    </li>
+
+    {% endfor %}
+
+</ul>
+
+
+<h3>Target Variable</h3>
+
+<p>
+    <b>{{ results.target }}</b>
+</p>
+
+
+<h3>Glucose Categories</h3>
+
+<ul>
+
+    {% for category in results.classes %}
+
+    <li>
+        {{ category }}
+    </li>
+
+    {% endfor %}
+
+</ul>
+
+
+<h3>Dataset Split</h3>
+
+<table border="1"
+       cellpadding="8">
+
+    <tr>
+
+        <th>
+            Training Samples
+        </th>
+
+        <td>
+            {{ results.train_rows }}
+        </td>
+
+    </tr>
+
+    <tr>
+
+        <th>
+            Testing Samples
+        </th>
+
+        <td>
+            {{ results.test_rows }}
+        </td>
+
+    </tr>
+
+</table>
+
+
+<h3>Evaluation Metrics</h3>
+
+<table border="1"
+       cellpadding="10">
+
+    <tr>
+
+        <th>
+            Metric
+        </th>
+
+        <th>
+            Value
+        </th>
+
+    </tr>
+
+    <tr>
+
+        <td>
+            Accuracy
+        </td>
+
+        <td>
+            {{ "%.4f"|format(results.accuracy) }}
+        </td>
+
+    </tr>
+
+    <tr>
+
+        <td>
+            Precision
+        </td>
+
+        <td>
+            {{ "%.4f"|format(results.precision) }}
+        </td>
+
+    </tr>
+
+    <tr>
+
+        <td>
+            Recall
+        </td>
+
+        <td>
+            {{ "%.4f"|format(results.recall) }}
+        </td>
+
+    </tr>
+
+    <tr>
+
+        <td>
+            F1 Score
+        </td>
+
+        <td>
+            {{ "%.4f"|format(results.f1) }}
+        </td>
+
+    </tr>
+
+</table>
+
+{% endif %}
+
+{% endblock %}

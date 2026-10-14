@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+
+{% block title %}
+Feature Scaling
+{% endblock %}
+
+{% block content %}
+
+<h1>Feature Scaling</h1>
+
+<p>
+    Scaling transforms numerical features to comparable
+    numerical ranges.
+</p>
+
+<hr>
+
+<form method="POST">
+
+    <label>
+        Select Numerical Column:
+    </label>
+
+    <select name="column" required>
+
+        <option value="">
+            -- Select Column --
+        </option>
+
+        {% for column in numerical_columns %}
+
+        <option value="{{ column }}">
+            {{ column }}
+        </option>
+
+        {% endfor %}
+
+    </select>
+
+    <br><br>
+
+    <label>
+        Scaling Method:
+    </label>
+
+    <select name="method" required>
+
+        <option value="standard">
+            Standard Scaler
+        </option>
+
+        <option value="minmax">
+            Min-Max Scaler
+        </option>
+
+        <option value="normalizer">
+            Normalizer
+        </option>
+
+    </select>
+
+    <br><br>
+
+    <button type="submit">
+        Apply Scaling
+    </button>
+
+</form>
+
+{% if error %}
+
+<hr>
+
+<p class="error">
+    <b>Error:</b> {{ error }}
+</p>
+
+{% endif %}
+
+{% if result %}
+
+<hr>
+
+<h2>Scaled Data Preview</h2>
+
+{{ result|safe }}
+
+{% endif %}
+
+{% endblock %}

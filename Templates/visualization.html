@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+
+{% block title %}
+Data Visualization
+{% endblock %}
+
+{% block content %}
+
+<h1>Data Visualization</h1>
+
+<p>
+    <b>Dataset:</b> {{ filename }}
+</p>
+
+<hr>
+
+<form method="POST">
+
+    <label>
+        Graph Type:
+    </label>
+
+    <select name="graph_type" required>
+
+        <option value="histogram"
+            {% if graph_type == "histogram" %}
+            selected
+            {% endif %}>
+            Histogram
+        </option>
+
+        <option value="boxplot"
+            {% if graph_type == "boxplot" %}
+            selected
+            {% endif %}>
+            Box Plot
+        </option>
+
+        <option value="bar"
+            {% if graph_type == "bar" %}
+            selected
+            {% endif %}>
+            Bar Graph
+        </option>
+
+    </select>
+
+    <br><br>
+
+    <label>
+        Select Column:
+    </label>
+
+    <select name="column" required>
+
+        <option value="">
+            -- Select Column --
+        </option>
+
+        {% for column in columns %}
+
+        <option value="{{ column }}"
+            {% if selected_column == column %}
+            selected
+            {% endif %}>
+
+            {{ column }}
+
+        </option>
+
+        {% endfor %}
+
+    </select>
+
+    <br><br>
+
+    <button type="submit">
+        Generate Graph
+    </button>
+
+</form>
+
+{% if error %}
+
+<hr>
+
+<p class="error">
+    <b>Error:</b> {{ error }}
+</p>
+
+{% endif %}
+
+{% if graph %}
+
+<hr>
+
+<h2>Generated Graph</h2>
+
+<img
+    src="data:image/png;base64,{{ graph }}"
+    alt="Generated Graph"
+>
+
+{% endif %}
+
+{% endblock %}

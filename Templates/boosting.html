@@ -1,0 +1,177 @@
+{% extends "base.html" %}
+
+{% block title %}
+Boosting
+{% endblock %}
+
+{% block content %}
+
+<h1>Gradient Boosting Regression</h1>
+
+<p>
+    Gradient Boosting builds models sequentially so that
+    later trees improve the errors made by earlier trees.
+</p>
+
+{% if error %}
+
+<hr>
+
+<p class="error">
+    <b>Error:</b> {{ error }}
+</p>
+
+{% endif %}
+
+{% if results %}
+
+<hr>
+
+<h2>Evaluation Metrics</h2>
+
+<table border="1" cellpadding="8">
+
+<tr>
+    <th>MAE</th>
+    <td>
+        {{ "%.4f"|format(results.mae) }}
+    </td>
+</tr>
+
+<tr>
+    <th>RMSE</th>
+    <td>
+        {{ "%.4f"|format(results.rmse) }}
+    </td>
+</tr>
+
+<tr>
+    <th>R² Score</th>
+    <td>
+        {{ "%.4f"|format(results.r2) }}
+    </td>
+</tr>
+
+</table>
+
+<hr>
+
+<h2>Model Configuration</h2>
+
+<ul>
+
+<li>
+    Estimators: 100
+</li>
+
+<li>
+    Learning Rate: 0.1
+</li>
+
+<li>
+    Maximum Depth: 3
+</li>
+
+<li>
+    Subsample: 1.0
+</li>
+
+</ul>
+
+<hr>
+
+<h2>Features Used</h2>
+
+<ul>
+
+{% for feature in results.features %}
+
+<li>
+    {{ feature }}
+</li>
+
+{% endfor %}
+
+</ul>
+
+{% if results.feature_importance %}
+
+<hr>
+
+<h2>Feature Importance</h2>
+
+<table border="1" cellpadding="8">
+
+<tr>
+    <th>Feature</th>
+    <th>Importance</th>
+</tr>
+
+{% for feature, importance in results.feature_importance.items() %}
+
+<tr>
+
+<td>
+    {{ feature }}
+</td>
+
+<td>
+    {{ "%.4f"|format(importance) }}
+</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+{% endif %}
+
+<hr>
+
+<h2>Predict Future Glucose</h2>
+
+<form method="POST">
+
+{% for feature in results.features %}
+
+<label>
+    {{ feature }}
+</label>
+
+<br>
+
+<input
+    name="{{ feature }}"
+    type="number"
+    step="any"
+    placeholder="Enter {{ feature }}"
+>
+
+<br><br>
+
+{% endfor %}
+
+<button type="submit">
+    Predict
+</button>
+
+</form>
+
+{% if prediction is not none %}
+
+<hr>
+
+<h2>Predicted Future Glucose</h2>
+
+<p>
+    <b>
+        {{ "%.2f"|format(prediction) }} mg/dL
+    </b>
+</p>
+
+{% endif %}
+
+{% endif %}
+
+{% endblock %}

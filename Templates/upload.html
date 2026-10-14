@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}
+Upload Dataset
+{% endblock %}
+
+{% block content %}
+
+<h1>Upload Dataset</h1>
+<form method="POST"
+      enctype="multipart/form-data">
+
+    <input type="file"
+           name="file"
+           accept=".csv"
+           required>
+
+    <br><br>
+
+    <button type="submit">
+        Upload Dataset
+    </button>
+
+</form>
+
+{% if error %}
+
+<hr>
+
+<p>
+    <b>Error:</b> {{ error }}
+</p>
+
+{% endif %}
+
+{% endblock %}

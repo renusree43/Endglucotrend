@@ -1,0 +1,182 @@
+{% extends "base.html" %}
+
+{% block title %}
+Linear Regression
+{% endblock %}
+
+{% block content %}
+
+<h1>Linear Regression</h1>
+
+<p>
+    Linear Regression predicts the future glucose value
+    using current glucose and lifestyle/physiological features.
+</p>
+
+<p>
+    <b>Forecast Horizon:</b>
+    Approximately 15 minutes
+</p>
+
+<hr>
+
+{% if results %}
+
+<h2>Model Information</h2>
+
+<table border="1"
+       cellpadding="8">
+
+<tr>
+    <th>Training Samples</th>
+    <td>{{ results.training_rows }}</td>
+</tr>
+
+<tr>
+    <th>Testing Samples</th>
+    <td>{{ results.testing_rows }}</td>
+</tr>
+
+<tr>
+    <th>Features</th>
+    <td>
+        {{ results.features|join(", ") }}
+    </td>
+</tr>
+
+</table>
+
+<hr>
+
+<h2>Evaluation Metrics</h2>
+
+<table border="1"
+       cellpadding="8">
+
+<tr>
+    <th>MAE</th>
+    <td>{{ "%.4f"|format(results.mae) }}</td>
+</tr>
+
+<tr>
+    <th>RMSE</th>
+    <td>{{ "%.4f"|format(results.rmse) }}</td>
+</tr>
+
+<tr>
+    <th>R² Score</th>
+    <td>{{ "%.4f"|format(results.r2) }}</td>
+</tr>
+
+</table>
+
+<hr>
+
+<h2>Predict Future Glucose</h2>
+
+<form method="POST">
+
+    <label>Current Glucose:</label>
+    <input type="number"
+           step="any"
+           name="glucose">
+
+    <br><br>
+
+    <label>Previous Glucose:</label>
+    <input type="number"
+           step="any"
+           name="glucose_lag_1">
+
+    <br><br>
+
+    <label>Glucose 2 Steps Back:</label>
+    <input type="number"
+           step="any"
+           name="glucose_lag_2">
+
+    <br><br>
+
+    <label>Glucose 3 Steps Back:</label>
+    <input type="number"
+           step="any"
+           name="glucose_lag_3">
+
+    <br><br>
+
+    <label>Insulin Bolus:</label>
+    <input type="number"
+           step="any"
+           name="insulin_bolus">
+
+    <br><br>
+
+    <label>Insulin Basal:</label>
+    <input type="number"
+           step="any"
+           name="insulin_basal">
+
+    <br><br>
+
+    <label>Carbohydrates:</label>
+    <input type="number"
+           step="any"
+           name="carbs">
+
+    <br><br>
+
+    <label>Exercise Steps:</label>
+    <input type="number"
+           step="any"
+           name="exercise_steps">
+
+    <br><br>
+
+    <label>Heart Rate:</label>
+    <input type="number"
+           step="any"
+           name="heart_rate">
+
+    <br><br>
+
+    <label>Stress Level:</label>
+    <input type="number"
+           step="any"
+           name="stress_level">
+
+    <br><br>
+
+    <button type="submit">
+        Predict Future Glucose
+    </button>
+
+</form>
+
+{% if prediction is not none %}
+
+<hr>
+
+<h2>
+    Predicted Future Glucose:
+    {{ "%.2f"|format(prediction) }}
+</h2>
+
+<p>
+    mg/dL
+</p>
+
+{% endif %}
+
+{% endif %}
+
+{% if error %}
+
+<hr>
+
+<p>
+    <b>Error:</b> {{ error }}
+</p>
+
+{% endif %}
+
+{% endblock %}

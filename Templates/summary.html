@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+
+{% block title %}
+Summary
+{% endblock %}
+
+{% block content %}
+
+<h1>Dataset Summary</h1>
+
+<p>
+    <b>Dataset:</b> {{ filename }}
+</p>
+
+<hr>
+
+<h2>Dataset Information</h2>
+
+<table border="1" cellpadding="8">
+
+<tr>
+    <th>Rows</th>
+    <td>{{ rows }}</td>
+</tr>
+
+<tr>
+    <th>Columns</th>
+    <td>{{ columns }}</td>
+</tr>
+
+<tr>
+    <th>Total Missing Values</th>
+    <td>{{ missing_total }}</td>
+</tr>
+
+<tr>
+    <th>Duplicate Rows</th>
+    <td>{{ duplicate_count }}</td>
+</tr>
+
+</table>
+
+<hr>
+
+<h2>Numerical Columns</h2>
+
+<ul>
+
+{% for column in numeric_columns %}
+
+<li>
+    {{ column }}
+</li>
+
+{% endfor %}
+
+</ul>
+
+<h2>Categorical Columns</h2>
+
+<ul>
+
+{% for column in categorical_columns %}
+
+<li>
+    {{ column }}
+</li>
+
+{% endfor %}
+
+</ul>
+
+<hr>
+
+<h2>Missing Values by Column</h2>
+
+<table border="1"
+       cellpadding="8">
+
+<tr>
+
+<th>
+Column
+</th>
+
+<th>
+Missing Values
+</th>
+
+</tr>
+
+{% for item in missing_table %}
+
+<tr>
+
+<td>
+{{ item["Column"] }}
+</td>
+
+<td>
+{{ item["Missing Values"] }}
+</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+<hr>
+
+<h2>Dataset Preview</h2>
+
+{{ preview|safe }}
+
+{% endblock %}

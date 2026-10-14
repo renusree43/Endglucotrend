@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+        {% block title %}
+        GlucoTrend
+        {% endblock %}
+    </title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+<div class="wrapper">
+
+    <aside class="sidebar">
+
+        <h2>GlucoTrend</h2>
+
+        <a href="{{ url_for('home') }}">
+            HOME
+        </a>
+
+        <a href="{{ url_for('upload') }}">
+            UPLOAD DATA
+        </a>
+
+        <a href="{{ url_for('summary') }}">
+            SUMMARY
+        </a>
+
+        <a href="{{ url_for('visualization') }}">
+            VISUALIZE DATA
+        </a>
+
+        <a href="{{ url_for('scaling') }}">
+            SCALING
+        </a>
+
+        <a href="{{ url_for('missing_values') }}">
+            MISSING VALUES
+        </a>
+
+        <a href="{{ url_for('encoding') }}">
+            ENCODING
+        </a>
+
+        <a href="{{ url_for('pca_page') }}">
+            PCA
+        </a>
+
+        <a href="{{ url_for('linear_regression') }}">
+            LINEAR REGRESSION
+        </a>
+
+        <a href="{{ url_for('decision_tree') }}">
+            DECISION TREE
+        </a>
+
+        <a href="{{ url_for('random_forest') }}">
+            RANDOM FOREST
+        </a>
+
+        <a href="{{ url_for('boosting') }}">
+            BOOSTING
+        </a>
+
+        <a href="{{ url_for('k_mean') }}">
+            K-MEANS CLUSTERING
+        </a>
+
+        <a href="{{ url_for('logistic_regression') }}">
+            LOGISTIC REGRESSION
+        </a>
+
+    </aside>
+
+
+    <main class="content">
+
+        {% block content %}
+
+        {% endblock %}
+
+    </main>
+
+</div>
+
+</body>
+
+</html>

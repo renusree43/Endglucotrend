@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+
+{% block title %}
+K-Means Clustering
+{% endblock %}
+
+{% block content %}
+
+<h1>K-Means Clustering</h1>
+
+<p>
+    K-Means Clustering is used to group similar
+    glucose and lifestyle observations into clusters.
+</p>
+
+<p>
+    In this project, three clusters are created using
+    selected numerical features from the dataset.
+</p>
+
+<hr>
+
+{% if error %}
+
+<p class="error">
+    <b>Error:</b> {{ error }}
+</p>
+
+{% endif %}
+
+{% if results %}
+
+<h2>Features Used</h2>
+
+<ul>
+
+{% for feature in results.features %}
+
+<li>
+    {{ feature }}
+</li>
+
+{% endfor %}
+
+</ul>
+
+<hr>
+
+<h2>Cluster Results</h2>
+
+<p>
+    The dataset has been divided into
+    <b>3 clusters</b>.
+</p>
+
+{{ results.clustered_data.head(10).to_html(
+    classes="data-table",
+    index=False
+)|safe }}
+
+<hr>
+
+<h2>Cluster Centers</h2>
+
+{{ results.cluster_centers.to_html(
+    classes="data-table",
+    index=False
+)|safe }}
+
+<hr>
+
+<h2>Predict Cluster</h2>
+
+<form method="POST">
+
+{% for feature in results.features %}
+
+<label>
+    {{ feature }}
+</label>
+
+<br>
+
+<input
+    type="number"
+    step="any"
+    name="{{ feature }}"
+    placeholder="Enter {{ feature }}"
+>
+
+<br><br>
+
+{% endfor %}
+
+<button type="submit">
+    Predict Cluster
+</button>
+
+</form>
+
+{% if prediction is not none %}
+
+<hr>
+
+<h2>Prediction</h2>
+
+<p>
+    The observation belongs to
+    <b>Cluster {{ prediction }}</b>.
+</p>
+
+{% endif %}
+
+{% endif %}
+
+{% endblock %}

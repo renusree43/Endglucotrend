@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+
+{% block title %}
+Decision Tree
+{% endblock %}
+
+{% block content %}
+
+<h1>Decision Tree Regression</h1>
+
+{% if error %}
+
+<hr>
+
+<p class="error">
+    <b>Error:</b> {{ error }}
+</p>
+
+{% endif %}
+
+{% if results %}
+
+<hr>
+
+<h2>Evaluation Metrics</h2>
+
+<table border="1" cellpadding="8">
+
+<tr>
+    <th>MAE</th>
+    <td>
+        {{ "%.4f"|format(results.mae) }}
+    </td>
+</tr>
+
+<tr>
+    <th>RMSE</th>
+    <td>
+        {{ "%.4f"|format(results.rmse) }}
+    </td>
+</tr>
+
+<tr>
+    <th>R² Score</th>
+    <td>
+        {{ "%.4f"|format(results.r2) }}
+    </td>
+</tr>
+
+</table>
+
+<h3>Features Used</h3>
+
+<p>
+    <b>Features:</b>
+    {{ results.features|join(", ") }}
+</p>
+
+<hr>
+
+<h2>Predict Future Glucose</h2>
+
+<form method="POST">
+
+{% for feature in results.features %}
+
+<label>
+    {{ feature }}
+</label>
+
+<br>
+
+<input
+    name="{{ feature }}"
+    type="number"
+    step="any"
+    placeholder="Enter {{ feature }}"
+>
+
+<br><br>
+
+{% endfor %}
+
+<button type="submit">
+    Predict
+</button>
+
+</form>
+
+{% if prediction is not none %}
+
+<hr>
+
+<h2>Predicted Future Glucose</h2>
+
+<p>
+    <b>
+        {{ "%.2f"|format(prediction) }} mg/dL
+    </b>
+</p>
+
+{% endif %}
+
+<hr>
+
+<h2>Decision Tree Visualization</h2>
+
+{% if results.tree_image %}
+
+<img
+    src="data:image/png;base64,{{ results.tree_image }}"
+    style="max-width:100%;"
+>
+
+{% endif %}
+
+{% endif %}
+
+{% endblock %}

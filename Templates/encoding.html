@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+
+{% block title %}
+Encoding
+{% endblock %}
+
+{% block content %}
+
+<h1>Encoding</h1>
+
+{% if not categorical_columns %}
+
+<p>
+    No categorical columns were detected.
+</p>
+
+{% else %}
+
+<form method="POST">
+
+    <label>
+        Select Categorical Column:
+    </label>
+
+    <select name="column"
+            required>
+
+        {% for column in categorical_columns %}
+
+        <option value="{{ column }}">
+            {{ column }}
+        </option>
+
+        {% endfor %}
+
+    </select>
+
+    <br><br>
+
+    <label>
+        Encoding Method:
+    </label>
+
+    <select name="method"
+            required>
+
+        <option value="label">
+            Label Encoding
+        </option>
+
+        <option value="onehot">
+            One-Hot Encoding
+        </option>
+
+    </select>
+
+    <br><br>
+
+    <button type="submit">
+        Apply Encoding
+    </button>
+
+</form>
+
+{% endif %}
+
+{% if error %}
+
+<hr>
+
+<p>
+    <b>Error:</b> {{ error }}
+</p>
+
+{% endif %}
+
+{% if message %}
+
+<hr>
+
+<h2>Status</h2>
+
+<p>
+{{ message }}
+</p>
+
+<h3>Code Used</h3>
+
+<pre>
+{{ code_used }}
+</pre>
+
+{% endif %}
+
+{% if preview %}
+
+<hr>
+
+<h2>Encoded Dataset Preview</h2>
+
+{{ preview|safe }}
+
+{% endif %}
+
+{% endblock %}

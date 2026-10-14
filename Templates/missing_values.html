@@ -1,0 +1,132 @@
+{% extends "base.html" %}
+
+{% block title %}
+Missing Values
+{% endblock %}
+
+{% block content %}
+
+<h1>Missing Value Handling</h1>
+
+<p>
+    Missing values can be handled using statistical
+    imputation or row/column deletion.
+</p>
+
+<form method="POST">
+
+    <label>
+        Select Column:
+    </label>
+
+    <select name="column"
+            required>
+
+        {% for column in columns %}
+
+        <option value="{{ column }}">
+            {{ column }}
+        </option>
+
+        {% endfor %}
+
+    </select>
+
+    <br><br>
+
+    <label>
+        Method:
+    </label>
+
+    <select name="method"
+            required>
+
+        <option value="mean">
+            Mean
+        </option>
+
+        <option value="median">
+            Median
+        </option>
+
+        <option value="mode">
+            Mode
+        </option>
+
+        <option value="constant">
+            Constant
+        </option>
+
+        <option value="drop_row">
+            Drop Row
+        </option>
+
+        <option value="drop_column">
+            Drop Column
+        </option>
+
+    </select>
+
+    <br><br>
+
+    <label>
+        Constant Value:
+    </label>
+
+    <input type="text"
+           name="constant_value"
+           placeholder="Used for Constant method">
+
+    <br><br>
+
+    <button type="submit">
+        Apply Method
+    </button>
+
+</form>
+
+{% if error %}
+
+<hr>
+
+<p>
+    <b>Error:</b> {{ error }}
+</p>
+
+{% endif %}
+
+{% if message %}
+
+<hr>
+
+<h2>Status</h2>
+
+<p>
+    {{ message }}
+</p>
+
+<h3>Code Used</h3>
+
+<pre>
+{{ code_used }}
+</pre>
+
+{% endif %}
+
+{% if preview %}
+
+<hr>
+
+<h2>Updated Dataset Preview</h2>
+
+{{ preview|safe }}
+
+<br>
+
+<a href="{{ url_for('save_dataset') }}">
+    Save Dataset
+</a>
+
+{% endif %}
+
+{% endblock %}
